@@ -22,9 +22,27 @@ public class SensorResource {
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Sensor addSensor(Sensor sensor) {
-        return DataStore.addSensor(sensor);
+    @Produces(MediaType.TEXT_PLAIN)
+    public String addSensor(Sensor sensor) {
+
+        // Check if room exists
+        boolean roomExists = false;
+
+        for (var room : DataStore.getAllRooms()) {
+            if (room.getId() == sensor.getRoomId()) {
+                roomExists = true;
+                break;
+            }
+        }
+
+        if (!roomExists) {
+            return "Invalid roomId: Room does not exist";
+        }
+
+        // Add sensor
+        DataStore.addSensor(sensor);
+
+        return "Sensor added successfully";
     }
     @GET
     @Path("/room/{roomId}")
