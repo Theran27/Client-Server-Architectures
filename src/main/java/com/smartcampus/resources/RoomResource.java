@@ -23,9 +23,22 @@ public class RoomResource {
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Room addRoom(Room room) {
-        return DataStore.addRoom(room);
+    @Produces(MediaType.TEXT_PLAIN)
+    public String addRoom(Room room) {
+
+        // Validation
+        if (room.getName() == null || room.getName().isEmpty()) {
+            return "Room name is required";
+        }
+
+        if (room.getBuilding() == null || room.getBuilding().isEmpty()) {
+            return "Building is required";
+        }
+
+        // Add room
+        DataStore.addRoom(room);
+
+        return "Room added successfully";
     }
     @DELETE
     @Path("/{id}")
