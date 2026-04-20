@@ -22,9 +22,27 @@ public class ReadingResource {
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public SensorReading addReading(SensorReading reading) {
-        return DataStore.addReading(reading);
+    @Produces(MediaType.TEXT_PLAIN)
+    public String addReading(SensorReading reading) {
+
+        // Check if sensor exists
+        boolean sensorExists = false;
+
+        for (var sensor : DataStore.getAllSensors()) {
+            if (sensor.getId() == reading.getSensorId()) {
+                sensorExists = true;
+                break;
+            }
+        }
+
+        if (!sensorExists) {
+            return "Invalid sensorId: Sensor does not exist";
+        }
+
+        // Add reading
+        DataStore.addReading(reading);
+
+        return "Reading added successfully";
     }
     @GET
     @Path("/sensor/{sensorId}")
