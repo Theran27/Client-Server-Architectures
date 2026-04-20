@@ -2,14 +2,10 @@ package com.smartcampus.resources;
 
 import com.smartcampus.models.Room;
 import com.smartcampus.services.DataStore;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.POST;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -21,31 +17,32 @@ public class RoomResource {
     public List<Room> getRooms() {
         return DataStore.getAllRooms();
     }
+
+    //  VALIDATION + HTTP RESPONSE
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String addRoom(Room room) {
+    public Response addRoom(Room room) {
 
-        // Validation
         if (room.getName() == null || room.getName().isEmpty()) {
-            return "Room name is required";
+            return Response.status(400).entity("Room name is required").build();
         }
 
         if (room.getBuilding() == null || room.getBuilding().isEmpty()) {
-            return "Building is required";
+            return Response.status(400).entity("Building is required").build();
         }
 
-        // Add room
         DataStore.addRoom(room);
 
-        return "Room added successfully";
+        return Response.status(201).entity("Room added successfully").build();
     }
+
+    //  DELETE
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String deleteRoom(@PathParam("id") int id) {
 
-        // Check if room exists
         Room roomToRemove = null;
 
         for (Room room : DataStore.getAllRooms()) {
@@ -59,7 +56,6 @@ public class RoomResource {
             return "Room not found";
         }
 
-        // Remove room
         DataStore.getAllRooms().remove(roomToRemove);
 
         return "Room deleted successfully";
