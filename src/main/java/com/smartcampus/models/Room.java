@@ -1,25 +1,31 @@
 package com.smartcampus.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
 
-    private int id;
+    private String id;
     private String name;
-    private String building;
+    private int capacity;
+    private List<String> sensorIds;
 
     public Room() {
+        this.sensorIds = new ArrayList<>();
     }
 
-    public Room(int id, String name, String building) {
+    public Room(String id, String name, int capacity) {
         this.id = id;
         this.name = name;
-        this.building = building;
+        this.capacity = capacity;
+        this.sensorIds = new ArrayList<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -31,11 +37,29 @@ public class Room {
         this.name = name;
     }
 
-    public String getBuilding() {
-        return building;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setBuilding(String building) {
-        this.building = building;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<String> getSensorIds() {
+        return sensorIds;
+    }
+
+    public void setSensorIds(List<String> sensorIds) {
+        this.sensorIds = sensorIds;
+    }
+
+    public void addSensorId(String sensorId) {
+        if (!this.sensorIds.contains(sensorId)) {
+            this.sensorIds.add(sensorId);
+        }
+    }
+
+    public void removeSensorId(String sensorId) {
+        this.sensorIds.remove(sensorId);
     }
 }

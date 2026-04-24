@@ -2,31 +2,31 @@ package com.smartcampus.models;
 
 public class Sensor {
 
-    private int id;
-    private String type;      // e.g., Temperature, Humidity
-    private int roomId;       // ID of the room this sensor belongs to
+    private String id;
+    private String type;
+    private String status;
+    private double currentValue;
+    private String roomId;
 
-    // Default constructor (required for JSON)
     public Sensor() {
     }
 
-    // Parameterized constructor
-    public Sensor(int id, String type, int roomId) {
+    public Sensor(String id, String type, String status, double currentValue, String roomId) {
         this.id = id;
         this.type = type;
+        this.status = status;
+        this.currentValue = currentValue;
         this.roomId = roomId;
     }
 
-    // Getter and Setter for id
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    // Getter and Setter for type
     public String getType() {
         return type;
     }
@@ -35,12 +35,27 @@ public class Sensor {
         this.type = type;
     }
 
-    // Getter and Setter for roomId
-    public int getRoomId() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public double getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(double currentValue) {
+        this.currentValue = currentValue;
+    }
+
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 }
